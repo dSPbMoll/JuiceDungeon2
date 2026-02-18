@@ -1,6 +1,7 @@
 package com.example.juicedungeon2;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,5 +28,8 @@ public class TavernActivity extends AppCompatActivity {
         // Hide everything (Status Bar & Navigation Bar)
         controller.hide(WindowInsetsCompat.Type.systemBars());
 
+        TavernScreen tavern = findViewById(R.id.tavern);
+        LinearLayout teamContainer = findViewById(R.id.teamLL);
+        tavern.setTeamLayout(teamContainer);
     }
 }

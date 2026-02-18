@@ -3,22 +3,25 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal|center_vertical"
     android:background="@android:color/black">
 
     <ImageView
         android:id="@+id/ImageView2_Left"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="230dp"
         android:layout_gravity="center"
         android:src="@drawable/logo" />
 
     <TextView
-        android:id="@+id/TextViewTopTitle"
+        android:id="@+id/splashText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="JRPG PRODUCTIONS"
+        android:text="@string/jrpg_productions"
         android:textColor="@color/logo_color"
-        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center_horizontal"
         android:gravity="top|center"
-        android:textSize="@dimen/logo_size" />
+        android:textSize="@dimen/splashTextSize"
+        android:layout_marginBottom="60dp"/>
+
 </LinearLayout>

@@ -2,6 +2,8 @@ package com.example.juicedungeon2;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,11 +13,15 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.JustifyContent;
 
+import java.util.ArrayList;
+
 public class TavernScreen extends FrameLayout {
     private final Context mContext;
-    private FlexboxLayout characterSpawningArea; // Cambiado a FlexboxLayout
-    private LinearLayout chosenCharactersLL;
-    private Character[] selectedCharacters;
+    private FlexboxLayout characterSpawningArea;
+    private LinearLayout teamLL;
+    private LinearLayout.LayoutParams teamLLChildParams;
+    private ArrayList<Character> team;
+    private final int maxTeamSize = 6;
     private int width;
     private int height;
 
@@ -31,17 +37,32 @@ public class TavernScreen extends FrameLayout {
         init(context);
     }
 
+    public void setTeamLayout(LinearLayout layout) {
+        this.teamLL = layout;
+    }
+
     private void init(Context context) {
         this.characterSpawningArea = new FlexboxLayout(context);
-        this.chosenCharactersLL = new LinearLayout(context);
-        this.selectedCharacters = new Character[6];
+        this.teamLLChildParams = initTeamLLChildParams();
+        this.team = new ArrayList<>();
 
         // CONFIGURACIÓN MÁGICA
-        this.characterSpawningArea.setFlexDirection(FlexDirection.ROW); // En fila
-        this.characterSpawningArea.setFlexWrap(FlexWrap.WRAP);          // Salto de línea automático
-        this.characterSpawningArea.setJustifyContent(JustifyContent.FLEX_START); // Alineados al inicio
+        this.characterSpawningArea.setFlexDirection(FlexDirection.ROW);
+        this.characterSpawningArea.setFlexWrap(FlexWrap.WRAP);
+        this.characterSpawningArea.setJustifyContent(JustifyContent.FLEX_START);
 
         addView(characterSpawningArea);
+    }
+
+    private LinearLayout.LayoutParams initTeamLLChildParams() {
+        int sizeInPx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                50,
+                getResources().getDisplayMetrics()
+        );
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(sizeInPx, sizeInPx);
+        params.setMargins(8, 8, 8, 8);
+        return params;
     }
 
     @Override
@@ -57,13 +78,8 @@ public class TavernScreen extends FrameLayout {
                     updateCharacterSpawningArea(width, height);
 
                     addCharacterToSpawningArea(Character.MACIA);
-                    addCharacterToSpawningArea(Character.SUMMONER);
-                    addCharacterToSpawningArea(Character.BERSERKER);
-                    addCharacterToSpawningArea(Character.DRUID);
-                    addCharacterToSpawningArea(Character.KNIGHT);
-                    addCharacterToSpawningArea(Character.GAMBLER);
-                    addCharacterToSpawningArea(Character.CORSAIR);
                     addCharacterToSpawningArea(Character.WIZARD);
+                    addCharacterToSpawningArea(Character.KNIGHT);
                 }
             });
         }
@@ -91,6 +107,13 @@ public class TavernScreen extends FrameLayout {
         if (imageResId != 0) {
             ImageView characterImg = new ImageView(mContext);
             characterImg.setImageResource(imageResId);
+            characterImg.setId(team.size());
+            characterImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addCharacterToTeamLL(character, v.getId());
+                }
+            });
 
             //int charH = (int) Math.round(height / 10.5 * 2);
             int charH = (int) Math.round(height /4);
@@ -111,16 +134,22 @@ public class TavernScreen extends FrameLayout {
         }
     }
 
-    private void updateChosenCharactersLL() {
-        chosenCharactersLL.removeAllViews();
+    private void addCharacterToTeamLL(Character character, int characterPosition) {
+        if (team.size() < maxTeamSize) {
+            ImageView imageView = new ImageView(mContext);
+            int charRes = getImageResOfCharacter(character);
+            imageView.setImageResource(charRes);
+            imageView.setLayoutParams(teamLLChildParams);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    team.remove(characterPosition);
+                    teamLL.removeView(v);
+                }
+            });
 
-        for (int i=0; i<selectedCharacters.length; i++) {
-            if (selectedCharacters[i] != null) break;
-
-            ImageView characterImg = new ImageView(mContext);
-            characterImg.setImageResource(getImageResOfCharacter(selectedCharacters[i]));
-
-
+            teamLL.addView(imageView);
+            team.add(character);
         }
     }
 
@@ -128,18 +157,8 @@ public class TavernScreen extends FrameLayout {
         switch (character) {
             case MACIA:
                 return R.drawable.macia;
-            case SUMMONER:
-                return R.drawable.summoner;
-            case GAMBLER:
-                return R.drawable.gambler;
-            case BERSERKER:
-                return R.drawable.berserker;
             case WIZARD:
                 return R.drawable.wizard;
-            case DRUID:
-                return R.drawable.druid;
-            case CORSAIR:
-                return R.drawable.corsair;
             case KNIGHT:
                 return R.drawable.knight;
         }

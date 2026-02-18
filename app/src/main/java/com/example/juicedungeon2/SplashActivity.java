@@ -1,10 +1,13 @@
 package com.example.juicedungeon2;
 
+import static java.lang.Thread.sleep;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TableLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,37 +33,50 @@ public class SplashActivity extends AppCompatActivity {
         controller.hide(WindowInsetsCompat.Type.systemBars());
 
         // Load animation
-        Animation fade1 = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
 
-        // Listener
-        fade1.setAnimationListener(new Animation.AnimationListener() {
+        // View reference
+        TextView title = findViewById(R.id.splashText);
+        ImageView logo = findViewById(R.id.ImageView2_Left);
+
+        // Start animations
+        title.startAnimation(fadeIn);
+        logo.startAnimation(fadeIn);
+
+        fadeIn.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {}
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // Verify !isFinishing()
-                if (!isFinishing()) {
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                title.startAnimation(fadeOut);
+                logo.startAnimation(fadeOut);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {}
         });
 
-        // View reference
-        TextView title = findViewById(R.id.TextViewTopTitle);
-        TableLayout table = findViewById(R.id.TableLayout01);
-        TextView botTtitle = findViewById(R.id.TextViewBottomTitle);
-        TextView botVersion = findViewById(R.id.TextViewBottomVersion);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
 
-        // Start animations
-        title.startAnimation(fade1);
-        table.startAnimation(fade1);
-        botTtitle.startAnimation(fade1);
-        botVersion.startAnimation(fade1);
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                try {
+                    sleep(500);
+                } catch(Exception ignored) {}
+
+                ((LinearLayout) title.getParent()).removeAllViews();
+
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
     }
 }
