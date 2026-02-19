@@ -1,6 +1,6 @@
 package com.example.juicedungeon2;
 
-public enum Character {
+public enum CharacterType {
     MACIA,
     WIZARD,
     KNIGHT

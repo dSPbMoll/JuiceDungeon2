@@ -1,6 +1,8 @@
 package com.example.juicedungeon2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -9,7 +11,10 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
+import java.util.ArrayList;
+
 public class TavernActivity extends AppCompatActivity {
+    private TavernScreen tavernScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +33,21 @@ public class TavernActivity extends AppCompatActivity {
         // Hide everything (Status Bar & Navigation Bar)
         controller.hide(WindowInsetsCompat.Type.systemBars());
 
-        TavernScreen tavern = findViewById(R.id.tavern);
+        this.tavernScreen = findViewById(R.id.tavern);
         LinearLayout teamContainer = findViewById(R.id.teamLL);
-        tavern.setTeamLayout(teamContainer);
+        tavernScreen.setTeamLayout(teamContainer);
+    }
+
+    public void enterDungeon(View view) {
+        ArrayList<CharacterType> team = this.tavernScreen.getTeam();
+        if (team.isEmpty()) {
+            return;
+        }
+
+        Intent intent = new Intent(TavernActivity.this, DungeonActivity.class);
+        intent.putExtra("SELECTED_TEAM", team);
+
+        startActivity(intent);
+        finish();
     }
 }

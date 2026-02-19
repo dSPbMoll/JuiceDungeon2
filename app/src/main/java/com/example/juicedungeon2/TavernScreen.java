@@ -20,7 +20,7 @@ public class TavernScreen extends FrameLayout {
     private FlexboxLayout characterSpawningArea;
     private LinearLayout teamLL;
     private LinearLayout.LayoutParams teamLLChildParams;
-    private ArrayList<Character> team;
+    private ArrayList<CharacterType> team;
     private final int maxTeamSize = 6;
     private int width;
     private int height;
@@ -35,6 +35,10 @@ public class TavernScreen extends FrameLayout {
         super(context, attrs);
         mContext = context;
         init(context);
+    }
+
+    public ArrayList<CharacterType> getTeam() {
+        return this.team;
     }
 
     public void setTeamLayout(LinearLayout layout) {
@@ -57,7 +61,7 @@ public class TavernScreen extends FrameLayout {
     private LinearLayout.LayoutParams initTeamLLChildParams() {
         int sizeInPx = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                50,
+                70,
                 getResources().getDisplayMetrics()
         );
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(sizeInPx, sizeInPx);
@@ -77,9 +81,9 @@ public class TavernScreen extends FrameLayout {
                     characterSpawningArea.removeAllViews();
                     updateCharacterSpawningArea(width, height);
 
-                    addCharacterToSpawningArea(Character.MACIA);
-                    addCharacterToSpawningArea(Character.WIZARD);
-                    addCharacterToSpawningArea(Character.KNIGHT);
+                    addCharacterToSpawningArea(CharacterType.MACIA);
+                    addCharacterToSpawningArea(CharacterType.WIZARD);
+                    addCharacterToSpawningArea(CharacterType.KNIGHT);
                 }
             });
         }
@@ -100,7 +104,7 @@ public class TavernScreen extends FrameLayout {
         characterSpawningArea.setLayoutParams(params);
     }
 
-    private void addCharacterToSpawningArea(Character character) {
+    private void addCharacterToSpawningArea(CharacterType character) {
         Integer imageResId = getImageResOfCharacter(character);
         if (imageResId == null) return;
 
@@ -134,10 +138,10 @@ public class TavernScreen extends FrameLayout {
         }
     }
 
-    private void addCharacterToTeamLL(Character character, int characterPosition) {
+    private void addCharacterToTeamLL(CharacterType character, int characterPosition) {
         if (team.size() < maxTeamSize) {
             ImageView imageView = new ImageView(mContext);
-            int charRes = getImageResOfCharacter(character);
+            int charRes = getImageResOfCharacterPicture(character);
             imageView.setImageResource(charRes);
             imageView.setLayoutParams(teamLLChildParams);
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +157,7 @@ public class TavernScreen extends FrameLayout {
         }
     }
 
-    private Integer getImageResOfCharacter(Character character) {
+    private Integer getImageResOfCharacter(CharacterType character) {
         switch (character) {
             case MACIA:
                 return R.drawable.macia;
@@ -161,6 +165,18 @@ public class TavernScreen extends FrameLayout {
                 return R.drawable.wizard;
             case KNIGHT:
                 return R.drawable.knight;
+        }
+        return null;
+    }
+
+    private Integer getImageResOfCharacterPicture(CharacterType character) {
+        switch (character) {
+            case MACIA:
+                return R.drawable.macia_picture;
+            case WIZARD:
+                return R.drawable.wizard_picture;
+            case KNIGHT:
+                return R.drawable.knight_picture;
         }
         return null;
     }

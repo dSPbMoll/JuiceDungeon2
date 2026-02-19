@@ -11,7 +11,22 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/teamLL">
+        android:id="@+id/teamLL"
+        android:layout_margin="20dp">
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/enterDungeonBtn"
+        android:layout_height="100dp"
+        android:layout_width="150dp"
+
+        android:src="@drawable/enter_dungeon_btn"
+        android:backgroundTint="#00000000"
+        android:scaleType="fitXY"
+
+        android:layout_marginTop="280dp"
+        android:layout_marginLeft="690dp"
+
+        android:onClick="enterDungeon"/>
 
 </com.example.juicedungeon2.TavernScreen>

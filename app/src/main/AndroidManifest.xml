@@ -33,5 +33,11 @@
             android:exported="true"
             android:screenOrientation="landscape">
         </activity>
+
+        <activity
+            android:name=".DungeonActivity"
+            android:exported="true"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 </manifest>
