@@ -15,6 +15,9 @@ public class TeamMember {
         this.type = character;
         this.moveSet = moveSet;
         this.MAX_HP_GROW_RATE = maxHpGrowRate;
+
+        this.power = 30;
+        recalculateStats();
     }
 
     //======================= GETTERS & SETTERS =======================

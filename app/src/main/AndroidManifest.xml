@@ -15,7 +15,8 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:process="com.example.juicedungeon2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,19 +26,22 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:process="com.example.juicedungeon2">
         </activity>
 
         <activity
             android:name=".TavernActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:process="com.example.juicedungeon2">
         </activity>
 
         <activity
             android:name=".DungeonActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:process="com.example.juicedungeon2">
         </activity>
     </application>
 </manifest>

@@ -2,7 +2,7 @@ package com.example.juicedungeon2;
 
 public enum BattleMove {
     STRIKE,
-    DEFENSE,
+    DEFEND,
     FIREBALL,
     UNI_HEAL,
     MULTI_HEAL,

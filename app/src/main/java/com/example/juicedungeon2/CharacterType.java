@@ -1,6 +1,8 @@
 package com.example.juicedungeon2;
 
-public enum CharacterType {
+import java.io.Serializable;
+
+public enum CharacterType implements Serializable {
     MACIA,
     WIZARD,
     KNIGHT
