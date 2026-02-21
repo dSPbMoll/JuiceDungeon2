@@ -33,8 +33,8 @@ public class SplashActivity extends AppCompatActivity {
         controller.hide(WindowInsetsCompat.Type.systemBars());
 
         // Load animation
-        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in_splash);
+        Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out_splash);
 
         // View reference
         TextView title = findViewById(R.id.splashText);

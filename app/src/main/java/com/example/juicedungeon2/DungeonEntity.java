@@ -2,7 +2,8 @@ package com.example.juicedungeon2;
 
 import java.util.ArrayList;
 
-public class TeamMember {
+public class DungeonEntity {
+    private final int teamNumber;
     private final CharacterType type;
     private int maxHp;
     private final double MAX_HP_GROW_RATE;
@@ -11,12 +12,25 @@ public class TeamMember {
 
     private final ArrayList<BattleMove> moveSet;
 
-    public TeamMember(CharacterType character, ArrayList<BattleMove> moveSet, double maxHpGrowRate) {
+    public DungeonEntity(int teamNumber, CharacterType character, ArrayList<BattleMove> moveSet,
+                         double maxHpGrowRate) {
+        this.teamNumber = teamNumber;
         this.type = character;
         this.moveSet = moveSet;
         this.MAX_HP_GROW_RATE = maxHpGrowRate;
 
-        this.power = 30;
+        this.power = 10;
+        recalculateStats();
+    }
+
+    public DungeonEntity(int teamNumber, CharacterType character, ArrayList<BattleMove> moveSet,
+                         double maxHpGrowRate, int basePower) {
+        this.teamNumber = teamNumber;
+        this.type = character;
+        this.moveSet = moveSet;
+        this.MAX_HP_GROW_RATE = maxHpGrowRate;
+
+        this.power = basePower;
         recalculateStats();
     }
 
@@ -24,28 +38,33 @@ public class TeamMember {
     public CharacterType getType() {
         return type;
     }
-
     public int getMaxHp() {
         return maxHp;
-    }
-
-    public void setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
     }
 
     public int getHp() {
         return hp;
     }
-
-    public void setHp(int hp) {
-        this.hp = hp;
+    public void heal(int ammountHealed) {
+        this.hp = this.hp + ammountHealed;
+        if (this.hp > this.maxHp) {
+            this.hp = this.maxHp;
+        }
     }
-
+    public void damage(int ammountDamaged) {
+        this.hp = this.hp - ammountDamaged;
+        if (this.hp < 0) {
+            this.hp = 0;
+        }
+    }
     public int getPower() {
         return this.power;
     }
     public void setPower(int power) {
         this.power = power;
+    }
+    public ArrayList<BattleMove> getMoveSet() {
+        return moveSet;
     }
 
     // ========================= OTHER ==========================
@@ -61,7 +80,6 @@ public class TeamMember {
         int maxHpDiff = maxHp - oldMaxHp;
 
         // Hp
-        this.hp = this.hp + maxHpDiff;
+        heal(maxHpDiff);
     }
-
 }

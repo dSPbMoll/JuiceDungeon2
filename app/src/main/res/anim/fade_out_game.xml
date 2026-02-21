@@ -6,7 +6,7 @@
     <alpha
         android:fromAlpha="1.0"
         android:toAlpha="0.0"
-        android:duration="2500">
+        android:duration="700">
     </alpha>
 
 </set>

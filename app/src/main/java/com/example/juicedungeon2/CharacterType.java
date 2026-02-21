@@ -5,5 +5,6 @@ import java.io.Serializable;
 public enum CharacterType implements Serializable {
     MACIA,
     WIZARD,
-    KNIGHT
+    KNIGHT,
+    GOBLIN
 }
